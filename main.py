@@ -10,7 +10,7 @@ from action_enum import Action
 #   - VISUALISE (to see the actual image with all the bounding boxes of skiffs identified)
 #   - PRINT (to print the pairs of coordinates, sorted per skiff
 
-FILE_NAME = '40-0-0.png'
+FILES_NAME = ['272-512-0.png', '1203-0-0.png']
 ACTION = Action.VISUALISE
 
 
@@ -18,14 +18,15 @@ def main():
     """
     The main function of the program. Processes all the image data and prints the skiff coordinates or adds bounding boxes
     """
-    point_list = process_image_data()
-    if ACTION == Action.PRINT:
-        print_image_skiff_coordinates(point_list)
-    else:
-        add_rectangular_on_image(point_list, 'dataset/pictures/' + FILE_NAME)
+    for file_name in FILES_NAME:
+        point_list = process_image_data(file_name)
+        if ACTION == Action.PRINT:
+            print_image_skiff_coordinates(point_list)
+        else:
+            add_rectangular_on_image(point_list, 'dataset/pictures/' + file_name)
 
 
-def process_image_data():
+def process_image_data(file_name):
     """
     The function that processes the image data by loading the json file and directly selecting the list of annotations.
     The operation above builds a json that contains a list of all the annotations for all the skiffs in the dataset that
@@ -40,7 +41,7 @@ def process_image_data():
     :return: matrix of pairs of coordinates
     """
     json = ijson.items(open('dataset/SatCen_skiffs256.json'), 'batch.annotations.item')
-    picture_object_metadata = filter(lambda annotation: annotation['name'] == FILE_NAME, json)
+    picture_object_metadata = filter(lambda annotation: annotation['name'] == file_name, json)
     for object_property in picture_object_metadata:
         all_points_list = [
             [
