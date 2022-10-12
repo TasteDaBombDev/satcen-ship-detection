@@ -18,17 +18,18 @@ def main():
     """
     The main function of the program. Processes all the image data and prints the skiff coordinates or adds bounding boxes
     """
+    json = ijson.items(open('dataset/SatCen_skiffs256.json'), 'batch.annotations.item')
     for file_name in FILES_NAME:
-        point_list = process_image_data(file_name)
+        point_list = process_image_data(file_name, json)
         if ACTION == Action.PRINT:
             print_image_skiff_coordinates(point_list)
         else:
             add_rectangular_on_image(point_list, 'dataset/pictures/' + file_name)
 
 
-def process_image_data(file_name):
+def process_image_data(file_name, json):
     """
-    The function that processes the image data by loading the json file and directly selecting the list of annotations.
+    The function that processes the image data getting json file and directly selecting the list of annotations.
     The operation above builds a json that contains a list of all the annotations for all the skiffs in the dataset that
     looks like this:
     {[data], [data2], [data3], ...}
@@ -40,7 +41,6 @@ def process_image_data(file_name):
 
     :return: matrix of pairs of coordinates
     """
-    json = ijson.items(open('dataset/SatCen_skiffs256.json'), 'batch.annotations.item')
     picture_object_metadata = filter(lambda annotation: annotation['name'] == file_name, json)
     for object_property in picture_object_metadata:
         all_points_list = [
