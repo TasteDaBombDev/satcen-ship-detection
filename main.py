@@ -10,7 +10,7 @@ from action_enum import Action
 #   - VISUALISE (to see the actual image with all the bounding boxes of skiffs identified)
 #   - PRINT (to print the pairs of coordinates, sorted per skiff
 
-FILES_NAME = ['272-512-0.png', '1203-0-0.png']
+FILES_NAME = ['20-0-0.png']
 ACTION = Action.VISUALISE
 
 

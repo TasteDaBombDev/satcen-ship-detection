@@ -1,4 +1,4 @@
-#!/Users/rares/PycharmProjects/pythonProject/venv/bin/python
+#!/Users/rares/PycharmProjects/pythonProject/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
