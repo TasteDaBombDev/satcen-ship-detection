@@ -5,7 +5,7 @@
 1. Clone repository
 2. Create virtual environment
     ```
-    python3 -m venv tudor
+    python3 -m venv env
     ```
 3. Start/stop virtual environment
     ```
