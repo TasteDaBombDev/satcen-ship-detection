@@ -79,6 +79,7 @@ Kaggle should already be installed if you ran ```pip install -r requirements.txt
     * **train_v2_labels:** png images representing the masks of the images (currently only for images that have at least one ship). Generated from run-length encoding. Values in the png are either 0 (background) or 1 (ship), because that's how fast.ai wants it
     * **train_valid:** training and validation data for the model. Contains 36k images with ships, the rest (6556) are for testing
     * **codes.txt:** mapping from integers to classes for the masks, needed by fast.ai. Only two values, background and ship
+    * **results_unet:** raw outputs of Unet (trained only on 36k Airbus images with ships) saved as *.npy* files
     * **sample_submission_v2.csv:** from challenge, don't really need it
     * **train_ship_segmentation_v2.csv:** segmentation masks for the entire training dataset, in run-length encoding
 
