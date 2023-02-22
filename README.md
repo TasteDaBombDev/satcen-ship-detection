@@ -84,17 +84,26 @@ Kaggle should already be installed if you ran ```pip install -r requirements.txt
     * **train_ship_segmentation_v2.csv:** segmentation masks for the entire training dataset, in run-length encoding
 
 * **satcen_dataset:** dataset from SatCen
-    * **pictures:** all images from the dataset
-    * **results_unet:** raw results of applying the trained Unet model on the Satcen images, in *.npy* format
-    * **labels_images:** NOT USED - segmentations masks applied on images based on the provided JSON file, saved as png
-    * **labels_images_binary:** BLACK and WHITE segmentations masks applied on images based on the provided JSON file, saved as png (black = no ship; white = ship)
-    * **labels:** segmentations masks applied on images based on the provided JSON file, saved as png
-    * **SatCen_skiffs256.json:** labels
+    * **full:** contains both original images and the additional ones
+        * **pictures:** RGB images
+        * **labels.json:** ground truth 
+    * **original:** original dataset received from Satcen
+        * **pictures:** all images from the dataset
+        * **results_unet:** raw results of applying the trained Unet model on the Satcen images, in *.npy* format
+        * **labels_images:** NOT USED - segmentations masks applied on images based on the provided JSON file, saved as png
+        * **labels_images_binary:** BLACK and WHITE segmentations masks applied on images based on the provided JSON file, saved as png (black = no ship; white = ship)
+        * **labels:** segmentations masks applied on images based on the provided JSON file, saved as png
+        * **SatCen_skiffs256.json:** labels
 
 * **image_analysis:** code to plot bounding boxes on SatCen images
+
+* **misc:** miscellaneous files used for working with the datasets etc.
+    * **satcen_handling.ipynb:** handles the addition of new images to the Satcen dataset
 
 * **ship_detection:**
     * **models:** saved models
         * **unet_googlenet.pth:** unet model with googlenet as encoder, trained for hardcoded epochs according to unet for ship detection papers
-
+        * **unet_satcen_finetuned.pth:** *unet_googlenet.pth* fine-tuned on the initial satcen dataset (1833 images in total, 70-30 stratified train-test split)
+    * **unet_classifier.ipynb:** test unet trained only on (36k) ship images from Airbus as a classifier (ship/no ship)
+    * **unet_finetune_satcen.ipynb:** fine tune unet (trained on 36k ship images from Airbus) using the initial Satcen dataset
     * **unet.ipynb:** process data and train model

@@ -1,3 +1,6 @@
 airbus_dataset/
 satcen_dataset/
 env/
+
+ship_detection/models/
+ship_detection/unet_googlenet.pth
