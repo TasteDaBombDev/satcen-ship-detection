@@ -86,6 +86,7 @@ Kaggle should already be installed if you ran ```pip install -r requirements.txt
 * **satcen_dataset:** dataset from SatCen
     * **full:** contains both original images and the additional ones
         * **pictures:** RGB images
+        * **results_unet:** raw outputs of Unet in .npy format
         * **labels.json:** ground truth 
     * **original:** original dataset received from Satcen
         * **pictures:** all images from the dataset
