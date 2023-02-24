@@ -85,8 +85,13 @@ Kaggle should already be installed if you ran ```pip install -r requirements.txt
 
 * **satcen_dataset:** dataset from SatCen
     * **full:** contains both original images and the additional ones
+        * **ground_truth_masks:** BLACK and WHITE segmentations masks applied on images based on the *labels.json* file, saved as png (black = no ship; white = ship)
         * **pictures:** RGB images
         * **results_unet:** raw outputs of Unet in .npy format
+        * **splits:** stratified 60-20-20 train-validation-test splits (used when training Unet)
+            * **train/images:** training data
+            * **validation/images:** validation data
+            * **test/images:** test data
         * **labels.json:** ground truth 
     * **original:** original dataset received from Satcen
         * **pictures:** all images from the dataset
