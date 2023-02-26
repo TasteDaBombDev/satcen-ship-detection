@@ -93,6 +93,7 @@ Kaggle should already be installed if you ran ```pip install -r requirements.txt
             * **validation/images:** validation data
             * **test/images:** test data
         * **labels.json:** ground truth 
+        * **codes.txt:** mapping from integers to classes for the masks, needed by fast.ai. Only two values, background and ship
     * **original:** original dataset received from Satcen
         * **pictures:** all images from the dataset
         * **results_unet:** raw results of applying the trained Unet model on the Satcen images, in *.npy* format
@@ -100,6 +101,7 @@ Kaggle should already be installed if you ran ```pip install -r requirements.txt
         * **labels_images_binary:** BLACK and WHITE segmentations masks applied on images based on the provided JSON file, saved as png (black = no ship; white = ship)
         * **labels:** segmentations masks applied on images based on the provided JSON file, saved as png
         * **SatCen_skiffs256.json:** labels
+        * **codes.txt:** mapping from integers to classes for the masks, needed by fast.ai. Only two values, background and ship
 
 * **image_analysis:** code to plot bounding boxes on SatCen images
 
