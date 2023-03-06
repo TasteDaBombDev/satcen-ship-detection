@@ -22,6 +22,10 @@
 pip freeze > requirements.txt
 ```
 
+### Using Detectron2
+
+When using the Detectron2 library, you need to use a different virtual environment, due to conflicting verions of PyTorch used by fast.ai and Detectron2. Create the virtual environment in the same way as above and install the dependencies from the **requirements_detectron2.txt** file. **IMPORTANT:** Do **NOT** include PyTorch and Detectron2 in the requirements file (these should be installed separately). 
+
 ## Kaggle
 
 Kaggle should already be installed if you ran ```pip install -r requirements.txt```. You need to configure your credentials in order to be able to download the Airbus Dataset:
