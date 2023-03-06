@@ -5,7 +5,7 @@
 1. Clone repository
 2. Create virtual environment
     ```
-    python3 -m venv tudor
+    python3 -m venv env
     ```
 3. Start/stop virtual environment
     ```
@@ -79,17 +79,39 @@ Kaggle should already be installed if you ran ```pip install -r requirements.txt
     * **train_v2_labels:** png images representing the masks of the images (currently only for images that have at least one ship). Generated from run-length encoding. Values in the png are either 0 (background) or 1 (ship), because that's how fast.ai wants it
     * **train_valid:** training and validation data for the model. Contains 36k images with ships, the rest (6556) are for testing
     * **codes.txt:** mapping from integers to classes for the masks, needed by fast.ai. Only two values, background and ship
+    * **results_unet:** raw outputs of Unet (trained only on 36k Airbus images with ships) saved as *.npy* files
     * **sample_submission_v2.csv:** from challenge, don't really need it
     * **train_ship_segmentation_v2.csv:** segmentation masks for the entire training dataset, in run-length encoding
 
 * **satcen_dataset:** dataset from SatCen
-    * **pictures:** all images from the dataset
-    * **SatCen_skiffs256.json:** labels
+    * **full:** contains both original images and the additional ones
+        * **ground_truth_masks:** BLACK and WHITE segmentations masks applied on images based on the *labels.json* file, saved as png (black = no ship; white = ship)
+        * **pictures:** RGB images
+        * **results_unet:** raw outputs of Unet in .npy format
+        * **splits:** stratified 60-20-20 train-validation-test splits (used when training Unet)
+            * **train/images:** training data
+            * **validation/images:** validation data
+            * **test/images:** test data
+        * **labels.json:** ground truth 
+        * **codes.txt:** mapping from integers to classes for the masks, needed by fast.ai. Only two values, background and ship
+    * **original:** original dataset received from Satcen
+        * **pictures:** all images from the dataset
+        * **results_unet:** raw results of applying the trained Unet model on the Satcen images, in *.npy* format
+        * **labels_images:** NOT USED - segmentations masks applied on images based on the provided JSON file, saved as png
+        * **labels_images_binary:** BLACK and WHITE segmentations masks applied on images based on the provided JSON file, saved as png (black = no ship; white = ship)
+        * **labels:** segmentations masks applied on images based on the provided JSON file, saved as png
+        * **SatCen_skiffs256.json:** labels
+        * **codes.txt:** mapping from integers to classes for the masks, needed by fast.ai. Only two values, background and ship
 
 * **image_analysis:** code to plot bounding boxes on SatCen images
+
+* **misc:** miscellaneous files used for working with the datasets etc.
+    * **satcen_handling.ipynb:** handles the addition of new images to the Satcen dataset
 
 * **ship_detection:**
     * **models:** saved models
         * **unet_googlenet.pth:** unet model with googlenet as encoder, trained for hardcoded epochs according to unet for ship detection papers
-
+        * **unet_satcen_finetuned.pth:** *unet_googlenet.pth* fine-tuned on the initial satcen dataset (1833 images in total, 70-30 stratified train-test split)
+    * **unet_classifier.ipynb:** test unet trained only on (36k) ship images from Airbus as a classifier (ship/no ship)
+    * **unet_finetune_satcen.ipynb:** fine tune unet (trained on 36k ship images from Airbus) using the initial Satcen dataset
     * **unet.ipynb:** process data and train model

@@ -2,6 +2,7 @@ import ijson
 from PIL import Image, ImageDraw as Drawer
 
 from action_enum import Action
+from image_names import FILES_NAME
 
 # CONSTANTS TO MODIFY:
 # FILE_NAME - holds the name of the files in the dataset
@@ -10,21 +11,21 @@ from action_enum import Action
 #   - VISUALISE (to see the actual image with all the bounding boxes of skiffs identified)
 #   - PRINT (to print the pairs of coordinates, sorted per skiff
 
-FILES_NAME = ['20-0-0.png']
-ACTION = Action.VISUALISE
+
+ACTION = Action.EXPORT
 
 
 def main():
     """
     The main function of the program. Processes all the image data and prints the skiff coordinates or adds bounding boxes
     """
-    json = ijson.items(open('../satcen_dataset/SatCen_skiffs256.json'), 'batch.annotations.item')
     for file_name in FILES_NAME:
+        json = ijson.items(
+            open('../satcen_dataset/SatCen_skiffs256.json'), 'batch.annotations.item')
+
         point_list = process_image_data(file_name, json)
-        if ACTION == Action.PRINT:
-            print_image_skiff_coordinates(point_list)
-        else:
-            add_rectangular_on_image(point_list, '../satcen_dataset/pictures/' + file_name)
+        print('Procesing image ' + file_name)
+        add_rectangular_on_image(point_list, file_name)
 
 
 def process_image_data(file_name, json):
@@ -41,7 +42,9 @@ def process_image_data(file_name, json):
 
     :return: matrix of pairs of coordinates
     """
-    picture_object_metadata = filter(lambda annotation: annotation['name'] == file_name, json)
+    picture_object_metadata = filter(
+        lambda annotation: annotation['name'] == file_name, json)
+
     for object_property in picture_object_metadata:
         all_points_list = [
             [
@@ -57,19 +60,14 @@ def add_rectangular_on_image(points_coordinates, image):
     """
     This function uses Drawer to add for each skiff a bounding box
     """
-    i = Image.open(image)
+    initial_image = Image.open('../satcen_dataset/pictures/' + image)
+    i = Image.new('RGB', (initial_image.width, initial_image.height))
+
     draw = Drawer.Draw(i)
     for points_list in points_coordinates:
         draw.polygon(points_list, outline="red")
-    i.show()
 
-
-def print_image_skiff_coordinates(data):
-    """
-    This function prints the data
-    :param data: matrix of paired points
-    """
-    print(data)
+    i.save('../satcen_dataset/labeled_images_binary/' + image, 'PNG')
 
 
 # main call
