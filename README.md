@@ -115,6 +115,8 @@ Kaggle should already be installed if you ran ```pip install -r requirements.txt
     * **models:** saved models
         * **unet_googlenet.pth:** unet model with googlenet as encoder, trained for hardcoded epochs according to unet for ship detection papers
         * **unet_satcen_finetuned.pth:** *unet_googlenet.pth* fine-tuned on the initial satcen dataset (1833 images in total, 70-30 stratified train-test split)
+    * **pipeline:** files related to the classification + detection pipeline
+        * **unet_positive_predictions.npy:** list of filenames of images predicted as positive by U-net (at least one ship pixel in U-net output)
     * **unet_classifier.ipynb:** test unet trained only on (36k) ship images from Airbus as a classifier (ship/no ship)
     * **unet_finetune_satcen.ipynb:** fine tune unet (trained on 36k ship images from Airbus) using the initial Satcen dataset
     * **unet.ipynb:** process data and train model
