@@ -88,9 +88,11 @@ Kaggle should already be installed if you ran ```pip install -r requirements.txt
     * **train_ship_segmentation_v2.csv:** segmentation masks for the entire training dataset, in run-length encoding
 
 * **satcen_dataset:** dataset from SatCen
+    
     * **full:** contains both original images and the additional ones
         * **ground_truth_masks:** BLACK and WHITE segmentations masks applied on images based on the *labels.json* file, saved as png (black = no ship; white = ship)
         * **pictures:** RGB images
+        * **unet_valid_outputs:** Decoded results of U-net on the validation set (format of files in this folder is *filename_unet_out.npy*)
         * **splits:** stratified 60-20-20 train-validation-test splits (used when training Unet)
             * **train/images:** training data
             * **validation/images:** validation data
