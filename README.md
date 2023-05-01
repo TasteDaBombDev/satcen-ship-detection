@@ -22,6 +22,10 @@
 pip freeze > requirements.txt
 ```
 
+### Using Detectron2
+
+When using the Detectron2 library, you need to use a different virtual environment, due to conflicting verions of PyTorch used by fast.ai and Detectron2. Create the virtual environment in the same way as above and install the dependencies from the **requirements_detectron2.txt** file. **IMPORTANT:** Do **NOT** include PyTorch and Detectron2 in the requirements file (these should be installed separately). 
+
 ## Kaggle
 
 Kaggle should already be installed if you ran ```pip install -r requirements.txt```. You need to configure your credentials in order to be able to download the Airbus Dataset:
@@ -84,10 +88,11 @@ Kaggle should already be installed if you ran ```pip install -r requirements.txt
     * **train_ship_segmentation_v2.csv:** segmentation masks for the entire training dataset, in run-length encoding
 
 * **satcen_dataset:** dataset from SatCen
+    
     * **full:** contains both original images and the additional ones
         * **ground_truth_masks:** BLACK and WHITE segmentations masks applied on images based on the *labels.json* file, saved as png (black = no ship; white = ship)
         * **pictures:** RGB images
-        * **results_unet:** raw outputs of Unet in .npy format
+        * **unet_valid_outputs:** Decoded results of U-net on the validation set (format of files in this folder is *filename_unet_out.npy*)
         * **splits:** stratified 60-20-20 train-validation-test splits (used when training Unet)
             * **train/images:** training data
             * **validation/images:** validation data
@@ -112,6 +117,8 @@ Kaggle should already be installed if you ran ```pip install -r requirements.txt
     * **models:** saved models
         * **unet_googlenet.pth:** unet model with googlenet as encoder, trained for hardcoded epochs according to unet for ship detection papers
         * **unet_satcen_finetuned.pth:** *unet_googlenet.pth* fine-tuned on the initial satcen dataset (1833 images in total, 70-30 stratified train-test split)
+    * **pipeline:** files related to the classification + detection pipeline
+        * **unet_positive_predictions.npy:** list of filenames of images predicted as positive by U-net (at least one ship pixel in U-net output)
     * **unet_classifier.ipynb:** test unet trained only on (36k) ship images from Airbus as a classifier (ship/no ship)
     * **unet_finetune_satcen.ipynb:** fine tune unet (trained on 36k ship images from Airbus) using the initial Satcen dataset
     * **unet.ipynb:** process data and train model

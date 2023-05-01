@@ -1,6 +1,8 @@
 airbus_dataset/
 satcen_dataset/
 env/
+detectron2_env/
+misc/detectron2_tutorial/
 
 # do not track models (too large)
 *.pth

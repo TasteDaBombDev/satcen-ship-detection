@@ -19,13 +19,13 @@ def main():
     """
     The main function of the program. Processes all the image data and prints the skiff coordinates or adds bounding boxes
     """
-    for file_name in FILES_NAME:
-        json = ijson.items(
-            open('../satcen_dataset/SatCen_skiffs256.json'), 'batch.annotations.item')
-
-        point_list = process_image_data(file_name, json)
-        print('Procesing image ' + file_name)
-        add_rectangular_on_image(point_list, file_name)
+    json = ijson.items(open('../satcen_dataset/full/labels.json'), 'item')
+    file_name = []
+    for object_property in json:
+        file_name.append(object_property['name'])
+    
+    print(file_name)
+    
 
 
 def process_image_data(file_name, json):
@@ -60,7 +60,7 @@ def add_rectangular_on_image(points_coordinates, image):
     """
     This function uses Drawer to add for each skiff a bounding box
     """
-    initial_image = Image.open('../satcen_dataset/pictures/' + image)
+    initial_image = Imopen('../satcen_dataset/pictures/' + image)
     i = Image.new('RGB', (initial_image.width, initial_image.height))
 
     draw = Drawer.Draw(i)
