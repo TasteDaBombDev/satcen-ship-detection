@@ -70,6 +70,8 @@ Kaggle should already be installed if you ran ```pip install -r requirements.txt
     ```
     mkdir train_v2_labels
     mkdir train_valid
+    mkdir splits/train/images
+    mkdir splits/test/images
     ```
 
 5. Create **codes.txt** and put "background" and "ship" into it (each on a new line)
@@ -78,6 +80,7 @@ Kaggle should already be installed if you ran ```pip install -r requirements.txt
 # Folder Structure
 
 * **airbus_dataset:** dataset from the Airbus Ship Detection Challenge
+    * **splits:** contains the 80-20 train-test split (only ship images) used to train the final U-Net model
     * **train_v2:** entire training dataset from the challenge (193k images with or without ships)
     * **test_v2:** test images from challenge (not really useful as we don't have ground truth)
     * **train_v2_labels:** png images representing the masks of the images (currently only for images that have at least one ship). Generated from run-length encoding. Values in the png are either 0 (background) or 1 (ship), because that's how fast.ai wants it
