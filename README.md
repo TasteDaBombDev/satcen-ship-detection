@@ -100,6 +100,9 @@ Kaggle should already be installed if you ran ```pip install -r requirements.txt
             * **train/images:** training data
             * **validation/images:** validation data
             * **test/images:** test data
+        * **splits_70_30:** stratified 70-30 train-test splits (used when training Unet)
+            * **train/images:** training data
+            * **test/images:** test data
         * **labels.json:** ground truth 
         * **codes.txt:** mapping from integers to classes for the masks, needed by fast.ai. Only two values, background and ship
     * **original:** original dataset received from Satcen
@@ -118,8 +121,12 @@ Kaggle should already be installed if you ran ```pip install -r requirements.txt
 
 * **ship_detection:**
     * **models:** saved models
+        * **faster_rcnn_rrpn:** 
+            * **model_final.pth:** Faster R-CNN model trained only on Satcen images (60-20-20 split)
+        * **unet_airbus_80_20.pth:** unet model trained on 80% of Airbus ship images
         * **unet_googlenet.pth:** unet model with googlenet as encoder, trained on ship images from Airbus for hardcoded epochs according to unet for ship detection papers
-        * **unet_satcen_finetuned.pth:** *unet_googlenet.pth* fine-tuned on the initial satcen dataset (1833 images in total, 70-30 stratified train-test split)
+        * **unet_satcen_finetuned.pth:** *unet_googlenet.pth* fine-tuned on the satcen datsaet with 60-20-20 split
+        * **unet_finetuned_satcen_70_30.pth:** *unet_airbus_80_20.pth* fine-tuned on the satcen dataset with 70-30 train-test split
     * **pipeline:** files related to the classification + detection pipeline
         * **unet_positive_predictions.npy:** list of filenames of images predicted as positive by U-net (at least one ship pixel in U-net output)
     * **unet_classifier.ipynb:** test unet trained only on (36k) ship images from Airbus as a classifier (ship/no ship)
