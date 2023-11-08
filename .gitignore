@@ -5,4 +5,6 @@ detectron2_env/
 misc/detectron2_tutorial/
 
 # do not track models (too large)
+faster_rcnn_rrpn/
+faster_rcnn_rrpn_70_30_skiff_imgs/
 *.pth

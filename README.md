@@ -70,6 +70,8 @@ Kaggle should already be installed if you ran ```pip install -r requirements.txt
     ```
     mkdir train_v2_labels
     mkdir train_valid
+    mkdir splits/train/images
+    mkdir splits/test/images
     ```
 
 5. Create **codes.txt** and put "background" and "ship" into it (each on a new line)
@@ -78,6 +80,7 @@ Kaggle should already be installed if you ran ```pip install -r requirements.txt
 # Folder Structure
 
 * **airbus_dataset:** dataset from the Airbus Ship Detection Challenge
+    * **splits:** contains the 80-20 train-test split (only ship images) used to train the final U-Net model
     * **train_v2:** entire training dataset from the challenge (193k images with or without ships)
     * **test_v2:** test images from challenge (not really useful as we don't have ground truth)
     * **train_v2_labels:** png images representing the masks of the images (currently only for images that have at least one ship). Generated from run-length encoding. Values in the png are either 0 (background) or 1 (ship), because that's how fast.ai wants it
@@ -92,10 +95,14 @@ Kaggle should already be installed if you ran ```pip install -r requirements.txt
     * **full:** contains both original images and the additional ones
         * **ground_truth_masks:** BLACK and WHITE segmentations masks applied on images based on the *labels.json* file, saved as png (black = no ship; white = ship)
         * **pictures:** RGB images
-        * **unet_valid_outputs:** Decoded results of U-net on the validation set (format of files in this folder is *filename_unet_out.npy*)
+        * **unet_valid_outputs:** Decoded results of U-net on the validation set of the 60-20-20 split (format of files in this folder is *filename_unet_out.npy*)
+        * **unet_test_outputs:** Decoded results of U-net on the test set of the 70-30 split (format of files in this folder is *filename_unet_out.npy*)
         * **splits:** stratified 60-20-20 train-validation-test splits (used when training Unet)
             * **train/images:** training data
             * **validation/images:** validation data
+            * **test/images:** test data
+        * **splits_70_30:** stratified 70-30 train-test splits (used when training Unet)
+            * **train/images:** training data
             * **test/images:** test data
         * **labels.json:** ground truth 
         * **codes.txt:** mapping from integers to classes for the masks, needed by fast.ai. Only two values, background and ship
@@ -115,10 +122,15 @@ Kaggle should already be installed if you ran ```pip install -r requirements.txt
 
 * **ship_detection:**
     * **models:** saved models
+        * **faster_rcnn_rrpn:** 
+            * **model_final.pth:** Faster R-CNN model trained only on Satcen images (60-20-20 split)
+        * **unet_airbus_80_20.pth:** unet model trained on 80% of Airbus ship images
         * **unet_googlenet.pth:** unet model with googlenet as encoder, trained on ship images from Airbus for hardcoded epochs according to unet for ship detection papers
-        * **unet_satcen_finetuned.pth:** *unet_googlenet.pth* fine-tuned on the initial satcen dataset (1833 images in total, 70-30 stratified train-test split)
+        * **unet_satcen_finetuned.pth:** *unet_googlenet.pth* fine-tuned on the satcen datsaet with 60-20-20 split
+        * **unet_finetuned_satcen_70_30.pth:** *unet_airbus_80_20.pth* fine-tuned on the satcen dataset with 70-30 train-test split
     * **pipeline:** files related to the classification + detection pipeline
-        * **unet_positive_predictions.npy:** list of filenames of images predicted as positive by U-net (at least one ship pixel in U-net output)
+        * **unet_positive_predictions.npy:** list of filenames of validation images from 60-20-20 split predicted as positive by U-net (at least one ship pixel in U-net output)
+        * **unet_positive_predictions_70_30_test.npy:** list of filenames of test images from 70-30 split predicted as positive by U-net (at least one ship pixel in U-net output)
     * **unet_classifier.ipynb:** test unet trained only on (36k) ship images from Airbus as a classifier (ship/no ship)
     * **unet_finetune_satcen.ipynb:** fine tune U-Net using the initial Satcen dataset
     * **unet.ipynb:** train U-Net on ship images from Airbus (28.8k train, 7.2k validation)
