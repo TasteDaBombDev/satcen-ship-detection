@@ -122,6 +122,7 @@ Kaggle should already be installed if you ran ```pip install -r requirements.txt
 * **misc:** miscellaneous files used for working with the datasets etc.
     * **dataset_examples.ipynb:** generates dataset examples in the desired presentation format
     * **satcen_handling.ipynb:** handles the addition of new images to the Satcen dataset
+    * **unet_roc_pr_curves.ipynb:** generates the ROC and PR curves for U-Net (as a binary classifier). The plots combine the results for both datasets.
 
 * **ship_detection:**
     * **models:** saved models
