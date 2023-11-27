@@ -22,10 +22,6 @@
 pip freeze > requirements.txt
 ```
 
-### Using Detectron2
-
-When using the Detectron2 library, you need to use a different virtual environment, due to conflicting verions of PyTorch used by fast.ai and Detectron2. Create the virtual environment in the same way as above and install the dependencies from the **requirements_detectron2.txt** file. **IMPORTANT:** Do **NOT** include PyTorch and Detectron2 in the requirements file (these should be installed separately). 
-
 ## Kaggle
 
 Kaggle should already be installed if you ran ```pip install -r requirements.txt```. You need to configure your credentials in order to be able to download the Airbus Dataset:
@@ -80,6 +76,7 @@ Kaggle should already be installed if you ran ```pip install -r requirements.txt
 # Folder Structure
 
 * **airbus_dataset:** dataset from the Airbus Ship Detection Challenge
+    * **roc_pr_curve_data**: decision scores and ground truth (binary labels) for the images in the test set. These should be used to generate the ROC and PR curves.
     * **splits:** contains the 80-20 train-test split (only ship images) used to train the final U-Net model
     * **train_v2:** entire training dataset from the challenge (193k images with or without ships)
     * **test_v2:** test images from challenge (not really useful as we don't have ground truth)
@@ -94,6 +91,7 @@ Kaggle should already be installed if you ran ```pip install -r requirements.txt
     
     * **full:** contains both original images and the additional ones
         * **ground_truth_masks:** BLACK and WHITE segmentations masks applied on images based on the *labels.json* file, saved as png (black = no ship; white = ship)
+        * **roc_pr_curve_data**: decision scores and ground truth (binary labels) for the images in the test set. These should be used to generate the ROC and PR curves.
         * **pictures:** RGB images
         * **unet_valid_outputs:** Decoded results of U-net on the validation set of the 60-20-20 split (format of files in this folder is *filename_unet_out.npy*)
         * **unet_test_outputs:** Decoded results of U-net on the test set of the 70-30 split (format of files in this folder is *filename_unet_out.npy*)
@@ -118,7 +116,9 @@ Kaggle should already be installed if you ran ```pip install -r requirements.txt
 * **image_analysis:** code to plot bounding boxes on SatCen images
 
 * **misc:** miscellaneous files used for working with the datasets etc.
+    * **dataset_examples.ipynb:** generates dataset examples in the desired presentation format
     * **satcen_handling.ipynb:** handles the addition of new images to the Satcen dataset
+    * **unet_roc_pr_curves.ipynb:** generates the ROC and PR curves for U-Net (as a binary classifier). The plots combine the results for both datasets.
 
 * **ship_detection:**
     * **models:** saved models
