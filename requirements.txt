@@ -69,7 +69,7 @@ langcodes==3.3.0
 lit==15.0.7
 Markdown==3.4.1
 MarkupSafe==2.1.1
-matplotlib==3.6.2
+matplotlib==3.7.4
 matplotlib-inline==0.1.6
 mistune==2.0.4
 mpmath==1.2.1
