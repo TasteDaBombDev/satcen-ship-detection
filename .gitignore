@@ -8,3 +8,4 @@ misc/detectron2_tutorial/
 faster_rcnn_rrpn/
 faster_rcnn_rrpn_70_30_skiff_imgs/
 *.pth
+*.pkl
