@@ -124,10 +124,11 @@ Kaggle should already be installed if you ran ```pip install -r requirements.txt
     * **models:** saved models
         * **faster_rcnn_rrpn:** 
             * **model_final.pth:** Faster R-CNN model trained only on Satcen images (60-20-20 split)
+            * **model.pkl:** same as *model_final.pth*, but as a *.pkl* file (SCORE_THRESH_TEST=0.9)
         * **unet_airbus_80_20.pth:** unet model trained on 80% of Airbus ship images
         * **unet_googlenet.pth:** unet model with googlenet as encoder, trained on ship images from Airbus for hardcoded epochs according to unet for ship detection papers
         * **unet_satcen_finetuned.pth:** *unet_googlenet.pth* fine-tuned on the satcen datsaet with 60-20-20 split
-        * **unet_finetuned_satcen_70_30.pth:** *unet_airbus_80_20.pth* fine-tuned on the satcen dataset with 70-30 train-test split
+        * **unet_finetuned_satcen_70_30.pkl:** *unet_airbus_80_20.pth* fine-tuned on the satcen dataset with 70-30 train-test split
     * **pipeline:** files related to the classification + detection pipeline
         * **unet_positive_predictions.npy:** list of filenames of validation images from 60-20-20 split predicted as positive by U-net (at least one ship pixel in U-net output)
         * **unet_positive_predictions_70_30_test.npy:** list of filenames of test images from 70-30 split predicted as positive by U-net (at least one ship pixel in U-net output)
